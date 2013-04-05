@@ -7,6 +7,7 @@ import operator
 import copy
 import report
 import logging
+import optparse
 
 def get_usage_cluster(probename = None):
     host = "rcf-gratia.unl.edu"
@@ -103,7 +104,16 @@ def mergeDict(dicta, dictb, merge_keys = []):
 def get_hours(item):
     return item[1]['hours']
 
+
+def AddOptions(parser):
+    parser.add_option("-e", "--email", dest="email", help="Email address to send the report")
+
 def main():
+
+    parser = optparse.OptionParser()
+    AddOptions(parser)
+
+    (options, args) = parser.parse_args()
     
     table = make_table.Table(add_numbers = False)
 
@@ -122,7 +132,7 @@ def main():
 
     log = logging.getLogger("test")
     yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
-    report.sendEmail(("Derek Weitzel", "dweitzel@cse.unl.edu"), (["dweitzel@cse.unl.edu"], ["dweitzel@cse.unl.edu"]), "cse.unl.edu", "HCC Usage: %s" % (yesterday.strftime("%m/%d/%y")), table.plainText(), table.html(), log)
+    report.sendEmail(("Derek Weitzel", "dweitzel@cse.unl.edu"), ([options.email], [options.email]), "cse.unl.edu", "HCC Usage: %s" % (yesterday.strftime("%m/%d/%y")), table.plainText(), table.html(), log)
 
 
 
