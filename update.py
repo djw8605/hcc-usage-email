@@ -117,10 +117,10 @@ def main():
     
     table = make_table.Table(add_numbers = False)
 
-    tusker_usage = get_usage_cluster("pbs-lsf:tusker.unl.edu")
-    firefly_usage = get_usage_cluster("pbs-lsf:ff-head.unl.edu")
+    tusker_usage = get_usage_cluster("slurm:head.tusker.hcc.unl.edu")
+    crane_usage = get_usage_cluster("slurm:head.crane.hcc.unl.edu")
     # Merge!
-    merged = mergeDict(tusker_usage, firefly_usage, ['hours', 'weekly_hours', 'monthly_hours'])
+    merged = mergeDict(tusker_usage, crane_usage, ['hours', 'weekly_hours', 'monthly_hours'])
     sandhills_usage = get_usage_cluster("slurm:sandhills.unl.edu")
 
     merged = mergeDict(sandhills_usage, merged, ['hours'])

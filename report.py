@@ -23,7 +23,7 @@ from email.MIMEBase import MIMEBase
 from email.Utils import formataddr
 from email.quopriMIME import encode
 
-import MySQLdb
+#import MySQLdb
 
 if not '.' in sys.path:
     sys.path.append('.')
