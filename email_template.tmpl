@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+
+    <style type="text/css">
+    
+    h1 
+    { 
+      font-weight: bold;
+      font-family: Georgia, Times, serif;  
+      margin-bottom: 5px;
+      margin-top: 15px;
+    }
+    
+    h2
+    {
+      font-family: Georgia, Times, serif; 
+    }
+    
+    body { 
+      background-color: LightGray;
+      font-family: Times, serif; 
+    }
+    
+    .maintable 
+    { 
+      background-color: white;
+      margin-left: auto; 
+      margin-right: auto; 
+      box-shadow: 0px 0px 5px DarkGray;
+      border-radius: 5px;
+    }
+    hr { 
+      display: block; height: 1px;
+      border: 0; border-top: 1px solid DarkGray;
+      padding: 0;
+    }
+    
+    .infotable td, .infotable th
+    {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    
+    .positive_difference
+    {
+      color:green;
+      
+    }
+    
+    .negative_difference
+    {
+      color:red;
+    }
+
+    .infotable th 
+    {
+      text-align:left
+    }
+    
+    .footer
+    {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    
+    </style>
+    <title>
+      Gratia Usage Report
+    </title>
+  </head>
+  <body>
+    <table width="600" class="maintable" style="">
+      <tr>
+        <td colspan=2>
+          <h1 style="text-align:center">
+            Gratia Usage Report
+          </h1>
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2><hr /></td>
+      </tr>
+      <tr>
+        <td style="width: 50%; padding-left: 15px; padding-right: 15px" valign="top">
+          <h2 style="text-align:center" valign="top">
+            Top 10 Users
+          </h2>
+          <table style="margin:auto;" class="infotable">
+            <tr>
+            <th>Username</th>
+            <th>Hours</th>
+            <th>Change</th>
+                
+            </tr>
+            #for user in $top_users
+            <tr>
+              <td>
+                $user["username"]
+              </td>
+              <td>
+                $user["hours"]
+              </td>
+              <td>
+                #set $average = (float($user["hours"]) + (float($user["weekly_hours"])) / 7) / 2
+                #set $percent_difference = (((float($user["hours"])) - (float($user["weekly_hours"])) / 7) / ($average)) * 100
+                #if $percent_difference > 0
+                <div class="positive_difference">
+                  +$int($percent_difference)%
+                </div>
+                #else
+                <div class="negative_difference">
+                  $int($percent_difference)%
+                </div>
+                #end if
+              </td>
+            </tr>
+            #end for
+          </table>
+        </td>
+        <td style="width: 50%; padding-left: 15px; padding-right: 15px" valign="top">
+          <h2 style="text-align:center">
+            Top 10 Resources
+          </h2>
+          <table style="margin:auto;" class="infotable">
+            <tr>
+              <th>
+                Resource
+              </th>
+              <th>
+                Hours
+              </th>
+              <th>
+                Change
+              </th>
+            </tr>
+            #for resource in $top_resources
+            <tr>
+              <td>
+                $resource[0]
+              </td>
+              <td>
+                $resource[1]["hours"]
+              </td>
+              <td>
+                #set $average = (float($resource[1]["hours"]) + (float($resource[1]["weekly_hours"])) / 7) / 2
+                #set $percent_difference = (((float($resource[1]["hours"])) - (float($resource[1]["weekly_hours"])) / 7) / ($average)) * 100
+                #if $percent_difference > 0
+                <div class="positive_difference">
+                  +$int($percent_difference)%
+                </div>
+                #else
+                <div class="negative_difference">
+                  $int($percent_difference)%
+                </div>
+                #end if
+              </td>
+            </tr>
+            #end for
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2>
+          <hr />
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 class="footer">
+          <p>
+            The % change was calculated by taking the daily average over the last week, and finding the percent difference from yesterday's hours.
+          </p>
+          <p style="text-align:center">
+          Report generated on $report_info.date from $report_info.server
+          </p>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
