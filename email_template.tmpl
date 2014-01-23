@@ -32,7 +32,9 @@
     { 
       background-color: white;
       margin-left: auto; 
-      margin-right: auto; 
+      margin-right: auto;
+      margin-top:20px;
+      margin-bottom:20px; 
       box-shadow: 0px 0px 5px DarkGray;
       border-radius: 5px;
     }
@@ -46,6 +48,20 @@
     {
       padding-left: 10px;
       padding-right: 10px;
+      margin-left: 0px;
+      margin-right: 0px;
+      border: 0px;
+    }
+    
+    .infotable th
+    {
+      background-color: LightBlue;
+      
+    }
+    
+    .infotable td
+    {
+      border-bottom: 1px solid LightGray;
     }
     
     .positive_difference
@@ -68,6 +84,11 @@
     {
       padding-left: 15px;
       padding-right: 15px;
+    }
+    .infotable
+    {
+      border-spacing: 0px;
+      border-collapse: separate;
     }
     
     </style>
@@ -167,6 +188,11 @@
             </tr>
             #end for
           </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2>
+          <img src="$graph_url" width="100%" style="padding-top:20px" />
         </td>
       </tr>
       <tr>
