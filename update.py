@@ -183,14 +183,17 @@ def main():
         user["weekly_hours"] = "%.2f" % group[1].get('weekly_hours', 0)
         users.append(user)
     
-    report_info = { "date": datetime.datetime.now().ctime(), "server": host}
+    
+    yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
+    report_info = { "date": datetime.datetime.now().ctime(), "server": host, "report_date": yesterday.strftime("%b %d, %Y")}
         
     t = Template(file="email_template.tmpl", searchList = [{'top_users': users, 'top_resources': sorted_resources, 'report_info': report_info}])
     f = open("produced.html", 'w')
     f.write(transform(str(t)))
     
     #print pynliner.fromString(str(t))
-    yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
+
+    
     #report.sendEmail(("Derek Weitzel", "dweitzel@cse.unl.edu"), ([options.email], [options.email]), "cse.unl.edu", "HCC Usage: %s" % (yesterday.strftime("%m/%d/%y")), table.plainText(), table.html(), log)
     report.sendEmail(("Derek Weitzel", "dweitzel@cse.unl.edu"), ([options.email], [options.email]), "cse.unl.edu", "HCC Usage: %s" % (yesterday.strftime("%m/%d/%y")), table.plainText(), transform(str(t)), log)
 
