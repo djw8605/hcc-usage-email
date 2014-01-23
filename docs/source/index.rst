@@ -6,6 +6,10 @@
 Welcome to Usage Report's documentation!
 ========================================
 
+Usage Reports are used to provide insight to what is happening at HPC Centers.
+
+.. image:: ExampleReport.png
+
 Contents:
 
 .. toctree::
@@ -18,6 +22,5 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
