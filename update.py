@@ -129,6 +129,15 @@ def mergeDict(dicta, dictb, merge_keys = []):
 def get_hours(item):
     return item[1]['hours']
 
+def get_graph_url(facilities):
+    url = "http://rcf-gratia.unl.edu/gratia/status_graphs/status_vo?facility=%(facilities)s&starttime=%(starttime)s&endtime=%(endtime)s"
+    starttime = datetime.datetime.now() - datetime.timedelta(days=2)
+    endtime = datetime.datetime.now() - datetime.timedelta(days=1)
+    string_starttime = starttime.strftime("%Y-%m-%d%%20%H:%M:%S")
+    string_endtime = endtime.strftime("%Y-%m-%d%%20%H:%M:%S")
+    
+    return url % { 'facilities': facilities, 'starttime': string_starttime, 'endtime': string_endtime}
+
 
 def AddOptions(parser):
     parser.add_option("-e", "--email", dest="email", help="Email address to send the report")
@@ -187,7 +196,9 @@ def main():
     yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
     report_info = { "date": datetime.datetime.now().ctime(), "server": host, "report_date": yesterday.strftime("%b %d, %Y")}
         
-    t = Template(file="email_template.tmpl", searchList = [{'top_users': users, 'top_resources': sorted_resources, 'report_info': report_info}])
+    graph_url = get_graph_url("tusker|crane|sandhills")
+    
+    t = Template(file="email_template.tmpl", searchList = [{'top_users': users, 'top_resources': sorted_resources, 'report_info': report_info, 'graph_url': graph_url}])
     f = open("produced.html", 'w')
     f.write(transform(str(t)))
     
